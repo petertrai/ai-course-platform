@@ -8,7 +8,7 @@ import { Provider } from "@/components/Providers";
 const lexend = Lexend({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Learning Journey",
+  title: "Course Creator",
 };
 
 export default function RootLayout({
