@@ -1,4 +1,5 @@
-'use client'
+"use client";
+
 import React from "react";
 import {
   DropdownMenu,
@@ -7,10 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 import { User } from "next-auth";
 import { signOut } from "next-auth/react";
 import { LogOut } from "lucide-react";
+import UserAvatar from "./UserAvatar";
 
 type Props = {
   user: User;
@@ -20,7 +22,7 @@ const UserAccountNav = ({ user }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Button>open menu</Button>
+        <UserAvatar user={user} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <div className="flex items-center justify-start gap-2 p-2">
@@ -33,6 +35,7 @@ const UserAccountNav = ({ user }: Props) => {
             )}
           </div>
         </div>
+
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onSelect={() => {
