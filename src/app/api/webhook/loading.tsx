@@ -14,3 +14,4 @@ const LoadingComponent = (props: Props) => {
 }
 
 export default LoadingComponent
+``
