@@ -31,6 +31,7 @@ const ChapterCard = React.forwardRef<ChapterCardHandler, Props>(
       },
     });
 
+    // add current chappter id to completed chapters state. 
     const addChapterIdToSet = React.useCallback(() => {
       setCompletedChapters((prev) => {
         const newSet = new Set(prev);
@@ -39,15 +40,17 @@ const ChapterCard = React.forwardRef<ChapterCardHandler, Props>(
       });
     }, [chapter.id, setCompletedChapters]);
 
+
     React.useEffect(() => {
       if (chapter.videoId) {
         setSuccess(true);
-        addChapterIdToSet;
+        addChapterIdToSet();
       }
     }, [chapter, addChapterIdToSet]);
 
     React.useImperativeHandle(ref, () => ({
       async triggerLoad() {
+        // if questions are generated do not do it again. Add it to state
         if (chapter.videoId) {
           addChapterIdToSet();
           return;
