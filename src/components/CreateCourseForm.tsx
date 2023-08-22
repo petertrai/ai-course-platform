@@ -10,11 +10,28 @@ import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import { Plus, Trash } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
+
 type Props = {};
 
 type Input = z.infer<typeof createChaptersSchema>;
 
 const CreateCourseForm = (props: Props) => {
+  const router = useRouter();
+  const { toast } = useToast();
+  const { mutate: createChapters, isLoading } = useMutation({
+    mutationFn: async ({ title, units }: Input) => {
+      const response = await axios.post("/api/course/createChapters", {
+        title,
+        units,
+      });
+      return response.data;
+    },
+  });
+
   const form = useForm<Input>({
     resolver: zodResolver(createChaptersSchema),
     defaultValues: {
@@ -24,7 +41,32 @@ const CreateCourseForm = (props: Props) => {
   });
 
   function onSubmit(data: Input) {
-    console.log(data);
+    if (data.units.some((unit) => unit === "")) {
+      toast({
+        title: "Error",
+        description: "Please fill in each field.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    createChapters(data, {
+      onSuccess: ({course_id}) => {
+        toast({
+          title: "Success",
+          description: "Course created successfully."
+        })
+        router.push(`/create/${course_id}`)
+      },
+      onError: (error) => {
+        console.error(error);
+        toast({
+          title: "Error",
+          description: "Something went wrong.",
+          variant: "destructive",
+        });
+      },
+    });
   }
 
   form.watch();
@@ -54,36 +96,37 @@ const CreateCourseForm = (props: Props) => {
           <AnimatePresence>
             {form.watch("units").map((_, index) => {
               return (
-                <motion.div key={index}
-                initial={{opacity: 0, height: 0}}
-                animate={{opacity: 1, height: "auto"}}
-                exit={{opacity: 0, height: 0}}
-                transition={{
-                    opacity: {duration: 0.2},
-                    height: {duration: 0.2}
-                }}
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{
+                    opacity: { duration: 0.2 },
+                    height: { duration: 0.2 },
+                  }}
                 >
-                    <FormField
-                      key={index}
-                      control={form.control}
-                      name={`units.${index}`}
-                      render={({ field }) => {
-                        return (
-                          <FormItem className="flex flex-col items-start w-full sm:items-center sm:flex-row">
-                            <FormLabel className="flex-[1] text-xl">
-                              {" "}
-                              Unit {index + 1}
-                            </FormLabel>
-                            <FormControl className="flex-[6] ">
-                              <Input
-                                placeholder="Enter a subtopic for the course"
-                                {...field}
-                              />
-                            </FormControl>
-                          </FormItem>
-                        );
-                      }}
-                    />
+                  <FormField
+                    key={index}
+                    control={form.control}
+                    name={`units.${index}`}
+                    render={({ field }) => {
+                      return (
+                        <FormItem className="flex flex-col items-start w-full sm:items-center sm:flex-row">
+                          <FormLabel className="flex-[1] text-xl">
+                            {" "}
+                            Unit {index + 1}
+                          </FormLabel>
+                          <FormControl className="flex-[6] ">
+                            <Input
+                              placeholder="Enter a subtopic for the course"
+                              {...field}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      );
+                    }}
+                  />
                 </motion.div>
               );
             })}
@@ -117,9 +160,10 @@ const CreateCourseForm = (props: Props) => {
             <Separator className="flex-[1]" />
           </div>
           <Button
-          type="submit"
-          className="w-full mt-6"
-          size="lg"
+            disabled={isLoading}
+            type="submit"
+            className="w-full mt-6"
+            size="lg"
           >
             Generate Course!
           </Button>
