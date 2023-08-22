@@ -4,7 +4,9 @@ import React from "react";
 import ChapterCard, { ChapterCardHandler } from "./ChapterCard";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
-import { Button, buttonVariants } from "./ui/button";
+import { buttonVariants } from "./ui/button";
+import { Button } from "@/components/ui/button"
+
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Props = {
@@ -16,7 +18,6 @@ type Props = {
 };
 
 const ConfirmChapters = ({ course }: Props) => {
-  // whenever we click on generate button we load and disabled button on loading
   const [loading, setLoading] = React.useState(false);
   const chapterRefs: Record<string, React.RefObject<ChapterCardHandler>> = {};
   course.units.forEach((unit) => {
@@ -25,17 +26,14 @@ const ConfirmChapters = ({ course }: Props) => {
       chapterRefs[chapter.id] = React.useRef(null);
     });
   });
-// on return of request to endpoint this will let us know when it is finished to update certain UI like the next button v
   const [completedChapters, setCompletedChapters] = React.useState<Set<String>>(
     new Set()
   );
-  // maps each unit and adds chapters and returns total count of all chapters 
   const totalChaptersCount = React.useMemo(() => {
     return course.units.reduce((acc, unit) => {
       return acc + unit.chapters.length;
     }, 0);
   }, [course.units]);
-  console.log(totalChaptersCount, completedChapters.size);
   return (
     <div className="w-full mt-4">
       {course.units.map((unit, unitIndex) => {
