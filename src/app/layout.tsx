@@ -18,9 +18,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning={true}>
       <body className={cn(lexend.className, "antialiased min-h-screen pt-16")}>
         <Provider>
+          {/* @ts-expect-error Server Component */}
           <Navbar />
 
           {children}
