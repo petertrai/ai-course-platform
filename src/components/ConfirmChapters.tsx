@@ -4,9 +4,7 @@ import React from "react";
 import ChapterCard, { ChapterCardHandler } from "./ChapterCard";
 import { Separator } from "./ui/separator";
 import Link from "next/link";
-import { buttonVariants } from "./ui/button";
-import { Button } from "@/components/ui/button"
-
+import { Button, buttonVariants } from "./ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Props = {
@@ -34,6 +32,7 @@ const ConfirmChapters = ({ course }: Props) => {
       return acc + unit.chapters.length;
     }, 0);
   }, [course.units]);
+  console.log(totalChaptersCount, completedChapters.size);
   return (
     <div className="w-full mt-4">
       {course.units.map((unit, unitIndex) => {
