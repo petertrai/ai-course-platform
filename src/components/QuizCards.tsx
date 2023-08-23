@@ -4,7 +4,7 @@ import { Chapter, Question } from "@prisma/client";
 import React from "react";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
-import { Button } from "@/components/ui/button"
+import { Button } from "./ui/Button"
 import { ChevronRight } from "lucide-react";
 
 type Props = {
