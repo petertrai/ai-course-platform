@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import axios from "axios";
 
 type Props = { isPro: boolean };
-
+export const dynamic = "force-dynamic"
 const SubscriptionButton = ({ isPro }: Props) => {
   const [loading, setLoading] = React.useState(false);
   const handleSubscribe = async () => {

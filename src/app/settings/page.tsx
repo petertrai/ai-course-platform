@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import SubscriptionButton from "@/components/SubscriptionButton";
 import { checkSubscription } from "@/lib/subscription";
 import React from "react";

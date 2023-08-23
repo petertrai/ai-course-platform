@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic"
 import { useSession } from "next-auth/react";
 import React from "react";
 import { Progress } from "./ui/progress";

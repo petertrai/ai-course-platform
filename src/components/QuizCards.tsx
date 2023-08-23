@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic"
 import { cn } from "@/lib/utils";
 import { Chapter, Question } from "@prisma/client";
 import React from "react";
@@ -13,7 +14,9 @@ type Props = {
   };
 };
 
+
 const QuizCards = ({ chapter }: Props) => {
+
   // state for which asnwers are sleectd by the user
   const [answers, setAnswers] = React.useState<Record<string, string>>({});
   // holding if state of questions is selected or t/f to update background color

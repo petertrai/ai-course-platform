@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import ConfirmChapters from "@/components/ConfirmChapters";
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";

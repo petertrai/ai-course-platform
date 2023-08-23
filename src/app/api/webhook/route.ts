@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { prisma } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
 import { headers } from "next/headers";

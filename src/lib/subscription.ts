@@ -1,6 +1,6 @@
 import { getAuthSession } from "./auth";
 import { prisma } from "./db";
-
+export const dynamic = "force-dynamic"
 const DAY_IN_MS = 1000 * 60 * 60 * 24;
 
 export const checkSubscription = async () => {

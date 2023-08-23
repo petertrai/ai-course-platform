@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import CreateCourseForm from '@/components/CreateCourseForm'
 import { getAuthSession } from '@/lib/auth'
 import { checkSubscription } from '@/lib/subscription'
